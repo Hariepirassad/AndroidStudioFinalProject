@@ -1,5 +1,6 @@
 package fr.esilv.s8.project.models;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by Harry on 20/03/2017.
  */
 
-public class Snippet {
+public class Snippet implements Serializable {
     private String title;
     private String description;
     private Thumbnails thumbnails;

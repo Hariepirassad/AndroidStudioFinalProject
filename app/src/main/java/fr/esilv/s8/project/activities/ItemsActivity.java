@@ -30,7 +30,6 @@ public class ItemsActivity extends AppCompatActivity implements OnInfosSelectedL
     private static final String URL = "https://www.googleapis.com/youtube/v3/search";
     private RecyclerView recyclerView;
     private String searchKey;
-    private String searchKeyWithoutSpace;
 
     //https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&type=video&q=AndroidStudio&key=AIzaSyA45BUbNv7xly18Qj46HeNCl-JVW3vp0gg
 
@@ -48,25 +47,18 @@ public class ItemsActivity extends AppCompatActivity implements OnInfosSelectedL
             searchKey = text;
         }
 
-        int l = searchKey.length();
-        char c;
-        for(int i = 0 ; i < l ; i++){
-            c = searchKey.charAt(i);
-            if(c != ' ')
-                searchKeyWithoutSpace += c;
-            else
-                searchKeyWithoutSpace += "%20";
-        }
+        searchKey = searchKey.replace(" ", "%20");
 
         getSearch();
     }
 
     private void getSearch() {
-        StringRequest search = new StringRequest(URL + "?part=snippet&maxResults=50&q=" + searchKeyWithoutSpace + "&type=video&key=" + Constants.API_KEY, new Response.Listener<String>() {
+        StringRequest search = new StringRequest(URL + "?part=snippet&maxResults=50&type=video&q="+searchKey+"&key="+Constants.API_KEY, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //parse data from webservice to get Contracts as Java object
                 Log.e("Infos", response);
+                Log.e("Infos", URL + "?part=snippet&maxResults=50&type=video&q=" + searchKey + "&key=" + Constants.API_KEY);
                 Search search = new Gson().fromJson(response, Search.class);
 
                 setAdapter(search.getItems());
@@ -89,6 +81,6 @@ public class ItemsActivity extends AppCompatActivity implements OnInfosSelectedL
 
     @Override
     public void onInfosSelected(Infos infos) {
-        PlayVideoActivity.start(this, infos.getId().getVideoId());
+        PlayVideoActivity.start(this, infos);
     }
 }
