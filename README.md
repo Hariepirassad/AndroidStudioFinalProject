@@ -8,7 +8,7 @@ Search video in YouTube.
 
 Create your YouTube API KEY and copy it in "Constants.java" file and launch the app.
 ```
-public static final String API_KEY = "YOUR YOUTUBE API KEY";
+public static final String API_KEY = "YOUR_YOUTUBE_API_KEY";
 ```
 
 ## Licence
